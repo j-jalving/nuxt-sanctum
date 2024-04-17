@@ -1,6 +1,6 @@
 {
-  "name": "nuxt-sanctum-auth",
-  "version": "0.4.7",
+  "name": "nuxt-sanctum",
+  "version": "0.0.1",
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -41,10 +41,10 @@
     "prettier": "^2.7.1",
     "tailwindcss": "^3.2.6"
   },
-  "description": "This is a simple package for interating Laravel Sanctum auth with Nuxt3. This package is in developement and for now works only in SPA mode (no ssr yet).",
+  "description": "This is a simple package for integrating Laravel Sanctum auth with Nuxt3 based on dystcz/nuxt-sanctum-auth and amrnn90/breeze-nuxt. Credit goes out them them for creating most of the code in this repo. This package is in development and has only been tested in **SPA** mode. ",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dystcz/nuxt-sanctum-auth.git"
+    "url": "git+https://github.com/j-jalving/nuxt-sanctum.git"
   },
   "keywords": [
     "nuxt3",
@@ -54,9 +54,9 @@
     "auth",
     "nuxt"
   ],
-  "author": "Paul Cross <me@paulcross.cz> (https://paulcross.cz/)",
+  "author": "Jouri Jalving <info@jourijalving.nl>",
   "bugs": {
-    "url": "https://github.com/dystcz/nuxt-sanctum-auth/issues"
+    "url": "https://github.com/j-jalving/nuxt-sanctum/issues"
   },
-  "homepage": "https://github.com/dystcz/nuxt-sanctum-auth#readme"
+  "homepage": "https://github.com/j-jalving/nuxt-sanctum#readme"
 }
