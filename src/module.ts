@@ -2,7 +2,7 @@ import {
   defineNuxtModule,
   createResolver,
   addPlugin,
-  addImports
+  addImportsDir
 } from '@nuxt/kit'
 import { type ModuleOptions } from './types'
 
@@ -42,18 +42,6 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.runtimeConfig.public.nuxtSanctum = options
     const { resolve } = createResolver(import.meta.url)
     addPlugin(resolve('./runtime/plugin'))
-
-    addImports([
-      {
-        name: 'useSubmit',
-        as: 'useSubmit',
-        from: resolve('runtime/composables')
-      },
-      {
-        name: 'useAuth',
-        as: 'useAuth',
-        from: resolve('runtime/composables')
-      }
-    ])
+    addImportsDir(resolve('./runtime/composables'))
   }
 })
