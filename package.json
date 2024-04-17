@@ -41,7 +41,7 @@
     "prettier": "^2.7.1",
     "tailwindcss": "^3.2.6"
   },
-  "description": "This is a simple package for integrating Laravel Sanctum auth with Nuxt3 based on dystcz/nuxt-sanctum-auth and amrnn90/breeze-nuxt. Credit goes out them them for creating most of the code in this repo. This package is in development and has only been tested in **SPA** mode. ",
+  "description": "This is a simple package for integrating Laravel Sanctum auth with Nuxt3 based on dystcz/nuxt-sanctum and amrnn90/breeze-nuxt. Credit goes out them them for creating most of the code in this repo. This package is in development and has only been tested in **SPA** mode. ",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/j-jalving/nuxt-sanctum.git"

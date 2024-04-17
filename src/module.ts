@@ -23,7 +23,7 @@ const defaults: ModuleOptions = {
   csrf: {
     headerKey: 'X-XSRF-TOKEN',
     cookieKey: 'XSRF-TOKEN',
-    tokenCookieKey: 'nuxt-sanctum-auth-token'
+    tokenCookieKey: 'nuxt-sanctum-token'
   },
   redirects: {
     home: '/',
@@ -34,7 +34,7 @@ const defaults: ModuleOptions = {
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: 'nuxt-sanctum-auth',
+    name: 'nuxt-sanctum',
     configKey: 'nuxtSanctum'
   },
   defaults,

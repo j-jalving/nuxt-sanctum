@@ -4,7 +4,7 @@ import nuxtSanctum from '../dist/module'
 export default defineNuxtConfig({
   app: {
     head: {
-      title: 'nuxt-sanctum-auth'
+      title: 'nuxt-sanctum'
     }
   },
 

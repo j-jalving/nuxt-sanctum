@@ -16,7 +16,7 @@
 
 ## v0.4.4
 
-- add ability to change token cookie name (default: `nuxt-sanctum-auth-token`)
+- add ability to change token cookie name (default: `nuxt-sanctum-token`)
 - fix request header and cookie name in login function
 
 ## v0.4.3
