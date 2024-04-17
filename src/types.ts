@@ -43,18 +43,17 @@ export type Larafetch = <T>(
   options?: FetchOptions
 ) => Promise<T>
 
-export type Csrf = string | null | undefined;
+export type Csrf = string | null | undefined
 
 export interface SanctumAuthPlugin {
   register: (body: any) => Promise<{ status: string }>
-  login: (body: any) => Promise<{ status: string, token?: string }>
+  login: (body: any) => Promise<{ status: string; token?: string }>
   forgotPassword: (body: any) => Promise<{ status: string }>
   resetPassword: (body: any) => Promise<{ status: string }>
   verifyEmail: (body: any) => Promise<{ status: string }>
   resendEmailVerification: () => Promise<{ status: string }>
   logout: () => Promise<void>
   getUser<T>({ refresh }?: { refresh?: boolean }): () => Promise<T | undefined>
-
 }
 
 // @ts-ignore

@@ -17,7 +17,8 @@ export default defineNuxtPlugin(async () => {
     }
   })
 
-  const config: ModuleOptions = useRuntimeConfig().public.nuxtSanctumAuth as ModuleOptions
+  const config: ModuleOptions = useRuntimeConfig().public
+    .nuxtSanctumAuth as ModuleOptions
 
   addRouteMiddleware('auth', async () => {
     if (config.token) {
@@ -68,7 +69,7 @@ export default defineNuxtPlugin(async () => {
   })
 
   const larafetch = $fetch.create({
-    credentials: "include",
+    credentials: 'include',
     async onRequest({ request, options }) {
       const auth = useState<Auth>('auth', () => {
         return {
@@ -77,64 +78,66 @@ export default defineNuxtPlugin(async () => {
           token: null
         }
       })
-      const config: ModuleOptions = useRuntimeConfig().public.nuxtSanctumAuth as ModuleOptions
-      const event = typeof useEvent === "function" ? useEvent() : null;
+      const config: ModuleOptions = useRuntimeConfig().public
+        .nuxtSanctumAuth as ModuleOptions
+      const event = typeof useEvent === 'function' ? useEvent() : null
       let token = event
         ? parseCookies(event)[config.csrf.cookieKey]
-        : useCookie(config.csrf.cookieKey).value;
-  
+        : useCookie(config.csrf.cookieKey).value
+
       // on client initiate a csrf request and get it from the cookie set by laravel
       if (
         process.client &&
-        ["post", "delete", "put", "patch"].includes(
-          options?.method?.toLowerCase() ?? ""
+        ['post', 'delete', 'put', 'patch'].includes(
+          options?.method?.toLowerCase() ?? ''
         )
       ) {
-        token = await initCsrf();
+        token = await initCsrf()
       }
-  
+
       let headers: HeadersInit = {
-        Accept: "application/json",
+        Accept: 'application/json',
         ...options?.headers,
         ...(token && { [config.csrf.headerKey]: token }),
-        Authorization: config.token ? 'Bearer ' + auth.value.token : ""
-      };
+        Authorization: config.token ? 'Bearer ' + auth.value.token : ''
+      }
 
       if (process.server) {
         const cookieString = event
-          ? event.headers.get("cookie")
-          : useRequestHeaders(["cookie"]).cookie;
-  
+          ? event.headers.get('cookie')
+          : useRequestHeaders(['cookie']).cookie
+
         headers = {
           ...headers,
-          ...(cookieString && { cookie: cookieString }),
+          ...(cookieString && { cookie: cookieString })
           // referer: frontendUrl,
-        };
+        }
       }
-  
-      options.headers = headers;
-      options.baseURL = config.baseUrl;
+
+      options.headers = headers
+      options.baseURL = config.baseUrl
     },
     async onResponseError({ response }) {
-      const status = response.status;
+      const status = response.status
       if ([500].includes(status)) {
-        console.error("[Laravel Error]", response.statusText, response._data);
+        console.error('[Laravel Error]', response.statusText, response._data)
       }
-    },
-  });
-  
+    }
+  })
+
   async function initCsrf(): Promise<Csrf> {
-    const config: ModuleOptions = useRuntimeConfig().public.nuxtSanctumAuth as ModuleOptions
-    const existingToken = useCookie(config.csrf.cookieKey).value;
-  
-    if (existingToken) return existingToken;
-  
+    const config: ModuleOptions = useRuntimeConfig().public
+      .nuxtSanctumAuth as ModuleOptions
+    const existingToken = useCookie(config.csrf.cookieKey).value
+
+    if (existingToken) return existingToken
+
     await $fetch(config.endpoints.csrf, {
       baseURL: config.baseUrl,
-      credentials: "include",
-    });
-  
-    return useCookie(config.csrf.cookieKey).value;
+      credentials: 'include'
+    })
+
+    return useCookie(config.csrf.cookieKey).value
   }
 
   const getToken = () => {
@@ -151,56 +154,64 @@ export default defineNuxtPlugin(async () => {
 
   const register = async (body: any): Promise<{ status: string }> => {
     return await larafetch<{ status: string }>(config.endpoints.register, {
-      method: "post",
+      method: 'post',
       body
-    });
+    })
   }
 
-  const login = async (body: any): Promise<{ status: string, token?: string }> => {
-    const response = await larafetch<{ status: string, token?: string }>(config.endpoints.login, {
-      method: "post",
-      body: JSON.stringify(body)
-    });
+  const login = async (
+    body: any
+  ): Promise<{ status: string; token?: string }> => {
+    const response = await larafetch<{ status: string; token?: string }>(
+      config.endpoints.login,
+      {
+        method: 'post',
+        body: JSON.stringify(body)
+      }
+    )
 
     if (config.token && response && response.token) {
       setToken(response.token)
     }
-    
-    return response; 
+
+    return response
   }
 
   const forgotPassword = async (body: any): Promise<{ status: string }> => {
     return await larafetch<{ status: string }>('/forgot-password', {
-      method: "post",
+      method: 'post',
       body
-    });
+    })
   }
 
   const resetPassword = async (body: any): Promise<{ status: string }> => {
-    return await larafetch<{ status: string }>("/reset-password", {
-      method: "post",
-      body,
-    });
+    return await larafetch<{ status: string }>('/reset-password', {
+      method: 'post',
+      body
+    })
   }
-  
+
   const verifyEmail = async (body: any): Promise<{ status: string }> => {
     return await larafetch<{ status: string }>('/verify-email', {
-      method: "post",
+      method: 'post',
       body
-    });
+    })
   }
 
   const resendEmailVerification = async (): Promise<{ status: string }> => {
-    return await larafetch<{ status: string }>('/email/verification-notification', {
-      method: "post",
-    });
+    return await larafetch<{ status: string }>(
+      '/email/verification-notification',
+      {
+        method: 'post'
+      }
+    )
   }
 
   const logout = async (): Promise<void> => {
     try {
       await larafetch<{ status: string }>(config.endpoints.logout, {
-        method: "post",
-      });
+        method: 'post'
+      })
     } catch (error) {
       console.log(error)
     } finally {
@@ -211,16 +222,18 @@ export default defineNuxtPlugin(async () => {
     }
   }
 
-  async function getUser<T>({ refresh = false }: {refresh?: boolean; } = {}): Promise<T | undefined> {
+  async function getUser<T>({
+    refresh = false
+  }: { refresh?: boolean } = {}): Promise<T | undefined> {
     if (!refresh && auth.value.loggedIn && auth.value.user) {
-      return auth.value.user as T;
+      return auth.value.user as T
     }
 
     try {
       const user = await larafetch(config.endpoints.user, {
-        method: "get",
-      });
-  
+        method: 'get'
+      })
+
       if (user) {
         auth.value.loggedIn = true
         auth.value.user = user
@@ -242,7 +255,7 @@ export default defineNuxtPlugin(async () => {
         forgotPassword,
         resetPassword,
         logout,
-        getUser,
+        getUser
       }
     }
   }

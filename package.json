@@ -20,7 +20,8 @@
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
-    "release": "npm run prepack && changelogen --release && npm publish && git push --follow-tags"
+    "release": "npm run prepack && changelogen --release && npm publish && git push --follow-tags",
+    "prettier": "prettier --write ./src"
   },
   "dependencies": {
     "@nuxt/kit": "^3.2.0",

@@ -28,7 +28,7 @@ const defaults: ModuleOptions = {
   redirects: {
     home: '/',
     login: '/login',
-    verify: '/verify',
+    verify: '/verify'
   }
 }
 
@@ -43,14 +43,17 @@ export default defineNuxtModule<ModuleOptions>({
     const { resolve } = createResolver(import.meta.url)
     addPlugin(resolve('./runtime/plugin'))
 
-    addImports([{
-      name: 'useSubmit',
-      as: 'useSubmit',
-      from: resolve('runtime/composables')
-    }, {
-      name: 'useAuth',
-      as: 'useAuth',
-      from: resolve('runtime/composables')
-    }])
+    addImports([
+      {
+        name: 'useSubmit',
+        as: 'useSubmit',
+        from: resolve('runtime/composables')
+      },
+      {
+        name: 'useAuth',
+        as: 'useAuth',
+        from: resolve('runtime/composables')
+      }
+    ])
   }
 })
