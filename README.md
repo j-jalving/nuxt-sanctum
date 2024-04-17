@@ -2,7 +2,7 @@
 
 <!-- [![npm version](https://badge.fury.io/js/nuxt-sanctum.svg)](https://badge.fury.io/js/nuxt-sanctum) -->
 
-This is a simple package for integrating Laravel Sanctum auth with Nuxt3 based on [dystcz/nuxt-sanctum](https://github.com/dystcz/nuxt-sanctum) and [amrnn90/breeze-nuxt](https://github.com/amrnn90/breeze-nuxt). Credit goes out them them for creating most of the code in this repo.
+This is a simple package for integrating Laravel Sanctum auth with Nuxt3 based on [dystcz/nuxt-sanctum-auth](https://github.com/dystcz/nuxt-sanctum-auth) and [amrnn90/breeze-nuxt](https://github.com/amrnn90/breeze-nuxt). Credit goes out them them for creating most of the code in this repo.
 
 This package is in development and has only been tested in **SPA** mode. Also this README needs to be updated to include new features.
 
