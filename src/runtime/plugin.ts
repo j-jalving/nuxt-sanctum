@@ -17,8 +17,7 @@ export default defineNuxtPlugin(async () => {
     }
   })
 
-  const config: ModuleOptions = useRuntimeConfig().public
-    .nuxtSanctum as ModuleOptions
+  const config: ModuleOptions = useRuntimeConfig().public.nuxtSanctum as ModuleOptions
 
   addRouteMiddleware('auth', async () => {
     if (config.token) {
@@ -178,33 +177,30 @@ export default defineNuxtPlugin(async () => {
   }
 
   const forgotPassword = async (body: any): Promise<{ status: string }> => {
-    return await larafetch<{ status: string }>('/forgot-password', {
+    return await larafetch<{ status: string }>(config.endpoints.forgotPassword, {
       method: 'post',
       body
     })
   }
 
   const resetPassword = async (body: any): Promise<{ status: string }> => {
-    return await larafetch<{ status: string }>('/reset-password', {
+    return await larafetch<{ status: string }>(config.endpoints.resetPassword, {
       method: 'post',
       body
     })
   }
 
   const verifyEmail = async (body: any): Promise<{ status: string }> => {
-    return await larafetch<{ status: string }>('/verify-email', {
+    return await larafetch<{ status: string }>(config.endpoints.verifyEmail, {
       method: 'post',
       body
     })
   }
 
   const resendEmailVerification = async (): Promise<{ status: string }> => {
-    return await larafetch<{ status: string }>(
-      '/email/verification-notification',
-      {
-        method: 'post'
-      }
-    )
+    return await larafetch<{ status: string }>(config.endpoints.verificationNotification, {
+      method: 'post'
+    })
   }
 
   const logout = async (): Promise<void> => {
