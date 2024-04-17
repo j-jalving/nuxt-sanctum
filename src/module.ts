@@ -35,11 +35,11 @@ const defaults: ModuleOptions = {
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'nuxt-sanctum-auth',
-    configKey: 'nuxtSanctumAuth'
+    configKey: 'nuxtSanctum'
   },
   defaults,
   setup(options, nuxt) {
-    nuxt.options.runtimeConfig.public.nuxtSanctumAuth = options
+    nuxt.options.runtimeConfig.public.nuxtSanctum = options
     const { resolve } = createResolver(import.meta.url)
     addPlugin(resolve('./runtime/plugin'))
 

@@ -18,7 +18,7 @@ export default defineNuxtPlugin(async () => {
   })
 
   const config: ModuleOptions = useRuntimeConfig().public
-    .nuxtSanctumAuth as ModuleOptions
+    .nuxtSanctum as ModuleOptions
 
   addRouteMiddleware('auth', async () => {
     if (config.token) {
@@ -79,7 +79,7 @@ export default defineNuxtPlugin(async () => {
         }
       })
       const config: ModuleOptions = useRuntimeConfig().public
-        .nuxtSanctumAuth as ModuleOptions
+        .nuxtSanctum as ModuleOptions
       const event = typeof useEvent === 'function' ? useEvent() : null
       let token = event
         ? parseCookies(event)[config.csrf.cookieKey]
@@ -127,7 +127,7 @@ export default defineNuxtPlugin(async () => {
 
   async function initCsrf(): Promise<Csrf> {
     const config: ModuleOptions = useRuntimeConfig().public
-      .nuxtSanctumAuth as ModuleOptions
+      .nuxtSanctum as ModuleOptions
     const existingToken = useCookie(config.csrf.cookieKey).value
 
     if (existingToken) return existingToken

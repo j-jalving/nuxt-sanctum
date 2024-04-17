@@ -1,5 +1,5 @@
 import { defineNuxtConfig } from 'nuxt/config'
-import nuxtSanctumAuth from '../dist/module'
+import nuxtSanctum from '../dist/module'
 
 export default defineNuxtConfig({
   app: {
@@ -14,9 +14,9 @@ export default defineNuxtConfig({
   },
 
   //@ts-ignore
-  modules: [nuxtSanctumAuth, '@nuxtjs/tailwindcss'],
+  modules: [nuxtSanctum, '@nuxtjs/tailwindcss'],
 
-  nuxtSanctumAuth: {
+  nuxtSanctum: {
     token: false, // set true to test jwt-token auth instead of cookie
     baseUrl: 'http://localhost:8000',
     endpoints: {

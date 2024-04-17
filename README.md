@@ -42,7 +42,7 @@ export default defineNuxtConfig({
     'nuxt-sanctum-auth'
     // ...
   ],
-  nuxtSanctumAuth: {
+  nuxtSanctum: {
     token: false, // set true to use jwt-token auth instead of cookie. default is false
     baseUrl: 'http://localhost:8000',
     endpoints: {
@@ -162,7 +162,7 @@ If you want to use Laravel Sanctum with JWT token authentication method,
 set the `token` property to true in the module configuration.
 
 ```js
-nuxtSanctumAuth: {
+nuxtSanctum: {
   token: true
   // other properties
 }
