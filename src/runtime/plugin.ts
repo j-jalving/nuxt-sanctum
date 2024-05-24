@@ -60,7 +60,11 @@ export default defineNuxtPlugin(async () => {
     if (config.token) {
       getToken()
     }
-    await getUser()
+    await getUser();
+
+    if (auth.value.loggedIn === false) {
+      return config.redirects.login
+    }
 
     if (auth.value.user.email_verified_at) {
       return config.redirects.home
