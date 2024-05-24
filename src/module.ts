@@ -15,7 +15,7 @@ const defaults: ModuleOptions = {
     forgotPassword: '/forgot-password',
     resetPassword: '/reset-password',
     verifyEmail: '/verify-email',
-    verificationNotification: '/verification-notification',
+    verificationNotification: '/email/verification-notification',
     login: '/login',
     logout: '/logout',
     user: '/user'
