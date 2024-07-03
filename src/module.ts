@@ -21,7 +21,7 @@ const defaults: ModuleOptions = {
   },
   csrf: {
     headerKey: 'X-XSRF-TOKEN',
-    cookieKey: 'XSRF-TOKEN',
+    cookieKey: 'XSRF-TOKEN'
   },
   token: {
     enabled: false,

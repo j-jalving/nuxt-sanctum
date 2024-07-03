@@ -17,7 +17,8 @@ export default defineNuxtPlugin(async () => {
     }
   })
 
-  const config: ModuleOptions = useRuntimeConfig().public.nuxtSanctum as ModuleOptions
+  const config: ModuleOptions = useRuntimeConfig().public
+    .nuxtSanctum as ModuleOptions
 
   addRouteMiddleware('auth', async () => {
     if (config.token.enabled) {
@@ -60,7 +61,7 @@ export default defineNuxtPlugin(async () => {
     if (config.token.enabled) {
       getToken()
     }
-    await getUser();
+    await getUser()
 
     if (auth.value.loggedIn === false) {
       return config.redirects.login
@@ -102,7 +103,10 @@ export default defineNuxtPlugin(async () => {
         Accept: 'application/json',
         ...options?.headers,
         ...(token && { [config.csrf.headerKey]: token }),
-        Authorization: config.token.enabled && auth.value.token ? 'Bearer ' + auth.value.token : ''
+        Authorization:
+          config.token.enabled && auth.value.token
+            ? 'Bearer ' + auth.value.token
+            : ''
       }
 
       if (process.server) {
@@ -124,7 +128,7 @@ export default defineNuxtPlugin(async () => {
       const status = response.status
       if ([419].includes(status)) {
         // CSRF Token mismatch
-        location.reload(); // Just reload for now, but this should probably be handled better
+        location.reload() // Just reload for now, but this should probably be handled better
       }
       if ([500].includes(status)) {
         console.error('[Laravel Error]', response.statusText, response._data)
@@ -159,17 +163,22 @@ export default defineNuxtPlugin(async () => {
     useCookie(config.token.cookieKey).value = null
   }
 
-  const register = async (body: any): Promise<{ status: string; token?: string }> => {
-    const response = await larafetch<{ status: string; token?: string }>(config.endpoints.register, {
-      method: 'post',
-      body
-    });
+  const register = async (
+    body: any
+  ): Promise<{ status: string; token?: string }> => {
+    const response = await larafetch<{ status: string; token?: string }>(
+      config.endpoints.register,
+      {
+        method: 'post',
+        body
+      }
+    )
 
     if (config.token.enabled && response && response.token) {
       setToken(response.token)
     }
 
-    return response;
+    return response
   }
 
   const login = async (
@@ -191,10 +200,13 @@ export default defineNuxtPlugin(async () => {
   }
 
   const forgotPassword = async (body: any): Promise<{ status: string }> => {
-    return await larafetch<{ status: string }>(config.endpoints.forgotPassword, {
-      method: 'post',
-      body
-    })
+    return await larafetch<{ status: string }>(
+      config.endpoints.forgotPassword,
+      {
+        method: 'post',
+        body
+      }
+    )
   }
 
   const resetPassword = async (body: any): Promise<{ status: string }> => {
@@ -212,9 +224,12 @@ export default defineNuxtPlugin(async () => {
   }
 
   const resendEmailVerification = async (): Promise<{ status: string }> => {
-    return await larafetch<{ status: string }>(config.endpoints.verificationNotification, {
-      method: 'post'
-    })
+    return await larafetch<{ status: string }>(
+      config.endpoints.verificationNotification,
+      {
+        method: 'post'
+      }
+    )
   }
 
   const logout = async (): Promise<void> => {
