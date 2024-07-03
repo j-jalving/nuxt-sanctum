@@ -18,12 +18,17 @@ export interface Redirects {
   verify: string
 }
 
+export interface Token {
+  enabled: false
+  cookieKey: string
+}
+
 export interface ModuleOptions {
   csrf: CSRFSpec
-  token: boolean
   baseUrl: string
   endpoints: Endpoints
   redirects: Redirects
+  token: Token
 }
 
 export interface Auth {
@@ -35,7 +40,6 @@ export interface Auth {
 export interface CSRFSpec {
   headerKey: string
   cookieKey: string
-  tokenCookieKey: string
 }
 
 export type Larafetch = <T>(

@@ -20,7 +20,7 @@ export default defineNuxtPlugin(async () => {
   const config: ModuleOptions = useRuntimeConfig().public.nuxtSanctum as ModuleOptions
 
   addRouteMiddleware('auth', async () => {
-    if (config.token) {
+    if (config.token.enabled) {
       getToken()
     }
     await getUser()
@@ -31,7 +31,7 @@ export default defineNuxtPlugin(async () => {
   })
 
   addRouteMiddleware('guest', async () => {
-    if (config.token) {
+    if (config.token.enabled) {
       getToken()
     }
     await getUser()
@@ -42,7 +42,7 @@ export default defineNuxtPlugin(async () => {
   })
 
   addRouteMiddleware('verified', async () => {
-    if (config.token) {
+    if (config.token.enabled) {
       getToken()
     }
     await getUser()
@@ -57,7 +57,7 @@ export default defineNuxtPlugin(async () => {
   })
 
   addRouteMiddleware('unverified', async () => {
-    if (config.token) {
+    if (config.token.enabled) {
       getToken()
     }
     await getUser();
@@ -102,7 +102,7 @@ export default defineNuxtPlugin(async () => {
         Accept: 'application/json',
         ...options?.headers,
         ...(token && { [config.csrf.headerKey]: token }),
-        Authorization: config.token ? 'Bearer ' + auth.value.token : ''
+        Authorization: config.token.enabled && auth.value.token ? 'Bearer ' + auth.value.token : ''
       }
 
       if (process.server) {
@@ -122,6 +122,10 @@ export default defineNuxtPlugin(async () => {
     },
     async onResponseError({ response }) {
       const status = response.status
+      if ([419].includes(status)) {
+        // CSRF Token mismatch
+        location.reload(); // Just reload for now, but this should probably be handled better
+      }
       if ([500].includes(status)) {
         console.error('[Laravel Error]', response.statusText, response._data)
       }
@@ -144,22 +148,28 @@ export default defineNuxtPlugin(async () => {
   }
 
   const getToken = () => {
-    auth.value.token = useCookie(config.csrf.tokenCookieKey)?.value || null
+    auth.value.token = useCookie(config.token.cookieKey)?.value || null
   }
 
   const setToken = (token: string) => {
-    useCookie(config.csrf.tokenCookieKey).value = token
+    useCookie(config.token.cookieKey).value = token
   }
 
   const clearToken = () => {
-    useCookie(config.csrf.tokenCookieKey).value = null
+    useCookie(config.token.cookieKey).value = null
   }
 
-  const register = async (body: any): Promise<{ status: string }> => {
-    return await larafetch<{ status: string }>(config.endpoints.register, {
+  const register = async (body: any): Promise<{ status: string; token?: string }> => {
+    const response = await larafetch<{ status: string; token?: string }>(config.endpoints.register, {
       method: 'post',
       body
-    })
+    });
+
+    if (config.token.enabled && response && response.token) {
+      setToken(response.token)
+    }
+
+    return response;
   }
 
   const login = async (
@@ -173,7 +183,7 @@ export default defineNuxtPlugin(async () => {
       }
     )
 
-    if (config.token && response && response.token) {
+    if (config.token.enabled && response && response.token) {
       setToken(response.token)
     }
 

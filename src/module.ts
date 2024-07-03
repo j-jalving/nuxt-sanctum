@@ -7,7 +7,6 @@ import {
 import { type ModuleOptions } from './types'
 
 const defaults: ModuleOptions = {
-  token: false,
   baseUrl: 'http://localhost:8000',
   endpoints: {
     csrf: '/sanctum/csrf-cookie',
@@ -23,7 +22,10 @@ const defaults: ModuleOptions = {
   csrf: {
     headerKey: 'X-XSRF-TOKEN',
     cookieKey: 'XSRF-TOKEN',
-    tokenCookieKey: 'nuxt-sanctum-token'
+  },
+  token: {
+    enabled: false,
+    cookieKey: 'nuxt-sanctum-token'
   },
   redirects: {
     home: '/',

@@ -43,7 +43,6 @@ export default defineNuxtConfig({
     // ...
   ],
   nuxtSanctum: {
-    token: false, // set true to use jwt-token auth instead of cookie. default is false
     baseUrl: 'http://localhost:8000',
     endpoints: {
       csrf: '/sanctum/csrf-cookie',
@@ -59,8 +58,11 @@ export default defineNuxtConfig({
     csrf: {
       headerKey: 'X-XSRF-TOKEN',
       cookieKey: 'XSRF-TOKEN',
-      tokenCookieKey: 'nuxt-sanctum-token'
     },
+    token: {
+      enabled: false; // set true to use jwt-token auth instead of cookie. default is false
+      cookieKey: 'nuxt-sanctum-token'
+    }
     redirects: {
       home: '/account',
       login: '/auth/login',
